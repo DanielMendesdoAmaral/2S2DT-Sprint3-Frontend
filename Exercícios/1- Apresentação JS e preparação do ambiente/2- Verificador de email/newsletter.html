@@ -19,16 +19,6 @@
             </label>
             <button id="btnEnviar" disabled>Enviar</button>
         </form>
-        <script>
-            let inputEmail = document.querySelector("#inputEmail");
-            let btnEnviar = document.querySelector("#btnEnviar");
-
-            inputEmail.onkeyup = function() {
-                if(inputEmail.value.includes("@"))
-                    btnEnviar.disabled = false;
-                else 
-                    btnEnviar.disabled = true;
-            }
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
