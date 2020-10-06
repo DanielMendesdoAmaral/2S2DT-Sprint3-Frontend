@@ -15,8 +15,9 @@ converter.onclick = function(event) {
     //Isso previne que quando você clicar no submit ele atualize a página.
     event.preventDefault();
     let temperatura = Number(inputTemperatura.value);
-    if(celsius.checked == true)
+    //Sempre use ===
+    if(celsius.checked === true)
         resultado.innerHTML = `${temperatura}°C = ${(((temperatura*9) / 5) + 32).toFixed(2)}°F`;
-    if(fahrenheit.checked == true)
+    if(fahrenheit.checked === true)
         resultado.innerHTML = `${temperatura}°F = ${(((temperatura - 32) * 5) / 9).toFixed(2)}°C`;
 }
