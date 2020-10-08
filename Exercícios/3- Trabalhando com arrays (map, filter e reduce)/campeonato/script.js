@@ -73,7 +73,13 @@ console.log(timesNomes);
 
 console.log("4:");
 let timeVitorias = times.map(time => {
-    return time.nome + `, total de jogos: ${time.vitorias + time.empates + time.derrotas}, vitorias: ${time.vitorias}, empates: ${time.empates}, derrotas: ${time.derrotas}`;
+    return {
+        nome: time.nome,
+        totalJogos: time.vitorias + time.empates + time.derrotas,
+        vitorias: time.vitorias,
+        empates: time.empates,
+        derrotas: time.derrotas
+    }
 });
 console.log(timeVitorias);
 
