@@ -10,6 +10,8 @@ let corpoTabela = document.querySelector("#corpoTabela");
 
 let linha, colunas;
 
+let editando = false;
+
 //Pure Function
 const listar = () => {
     //Fetch é um XMLHTTPRequest "mais fácil". Por padrão, o method do fetch já é o GET.
@@ -67,7 +69,7 @@ const deletar = (id) => {
     })
     .then(response => response.json())
     .then(response => {
-        alert("Categoria removida com sucesso.");
+        alert("Categoria deletada com sucesso.");
         listar();
     })
     .catch(err => alert(err + ". Mande um email para a nossa equipe de suporte: nyous.suport@gmail.com"));
@@ -78,8 +80,10 @@ const editar = (id) => {
     fetch(url + "/" + id)
     .then(response => response.json())
     .then(response => {
-        inputIdCategoria.value = response.id,
-        inputTituloCategoria.value = response.titulo
+        inputIdCategoria.value = response.id;
+        inputTituloCategoria.value = response.titulo;
+        editando = true;
+        btnCadastrar.innerHTML = "Editar";
     })
     .catch(err => alert(err + ". Mande um email para a nossa equipe de suporte: nyous.suport@gmail.com"));
 }
@@ -94,6 +98,8 @@ btnCadastrar.onclick = (event) => {
     let metodo = (inputIdCategoria.value === "" ? "POST" : "PUT");
     let urlPostOuPut = (inputIdCategoria.value === "" ? url : url + "/" + inputIdCategoria.value);
 
+    limparCampos();
+
     fetch(urlPostOuPut, {
         method: metodo,
         body: JSON.stringify(categoria),
@@ -103,10 +109,23 @@ btnCadastrar.onclick = (event) => {
     })
     .then(response => response.json())
     .then(response => {
-        alert("Categoria cadastrada com sucesso.");
+        if(metodo==="POST")
+            alert("Categoria cadastrada com sucesso.");
+        else 
+            alert("Categoria editada com sucesso.");
         listar();
     })
     .catch(err => alert(err + ". Mande um email para a nossa equipe de suporte: nyous.suport@gmail.com"));
+
+    if(editando) {
+        btnCadastrar.innerHTML = "Cadastrar";
+        editando = false;
+    }
+}
+
+const limparCampos = () => {
+    inputIdCategoria.value = "";
+    inputTituloCategoria.value = "";
 }
 
 window.onload = listar;
