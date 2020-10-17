@@ -9,7 +9,7 @@ import "./index.css";
 function Rodape() {
     return (
         <footer className="fundo-azul"> {/*class é uma palavra reservada do js, então usamos className.*/}
-        <h1>Senai Informática 132</h1>
+            <h1>Senai Informática 132</h1>
         </footer>
     );
 }
