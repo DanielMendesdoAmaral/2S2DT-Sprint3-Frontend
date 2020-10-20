@@ -8,6 +8,8 @@ import Home from './pages/home';
 import Login from "./pages/login";
 import Cadastrar from "./pages/cadastrar";
 import NaoEncontrada from "./pages/404";
+import Eventos from './pages/eventos';
+import Admin from "./pages/admin";
 
 //Estilo bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,6 +29,8 @@ const routing = (
       <Route path="/cadastrar" component={Cadastrar}/>
       {/*Se não encontrar, renderiza essa padrão.*/}
       <Route component={NaoEncontrada}/>
+      <Route path="/eventos" component={Eventos}/>
+      <Route path="/admin" component={Admin}/>
     </Switch>
   </Router>
 )
