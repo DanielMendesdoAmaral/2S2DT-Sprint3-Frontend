@@ -9,7 +9,9 @@ import Login from "./pages/login";
 import Cadastrar from "./pages/cadastrar";
 import NaoEncontrada from "./pages/404";
 import Eventos from './pages/eventos';
-import Admin from "./pages/admin";
+import Dashboard from "./pages/admin";
+import CrudCategorias from "./pages/admin/crudCategorias";
+import CrudEventos from "./pages/admin/crudEventos";
 
 //Estilo bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,8 +20,43 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+
+import jwt_decode from "jwt-decode";
+
+//Forma melhor de privar usuários sem permissão de ver algumas páginas. Tem outra forma (que não é boa) em eventos e na dashboard do admin.
+//Recebe um componente como parâmetro
+const RotaPrivada = ({component : Component, ...rest}) => (
+  <Route
+    {...rest}
+    render= {
+      props => 
+      //Se a pessoa não estiver logada
+      localStorage.getItem("token-nyous") === null ?
+        //É redirecionada para o login
+        <Redirect to={{pathname: "/login", state: {from: props.location}}}/> :
+        //Se não, vai para a página colocada no parâmetro
+        <Component {...props}/>
+    }
+  />
+);
+
+const RotaPrivadaAdmin = ({component : Component, ...rest}) => (
+  <Route
+    {...rest}
+    render= {
+      props => 
+      //Se a pessoa estiver logada E for admin
+      localStorage.getItem("token-nyous") !== null && jwt_decode(localStorage.getItem("token-nyous")).role === "Admin" ?
+        //Vai pra página que quer
+        <Component {...props}/> :
+        //Se não estiver logada, ou mesmo se tiver e for comum, vai pra página de login
+        <Redirect to={{pathname: "/login", state: {from: props.location}}}/>
+    }
+  />
+);
 
 const routing = (
   <Router>
@@ -29,8 +66,10 @@ const routing = (
       <Route path="/cadastrar" component={Cadastrar}/>
       {/*Se não encontrar, renderiza essa padrão.*/}
       <Route component={NaoEncontrada}/>
-      <Route path="/eventos" component={Eventos}/>
-      <Route path="/admin" component={Admin}/>
+      <RotaPrivada path="/eventos" component={Eventos}/>
+      <RotaPrivadaAdmin path="/admin/dashboard" component={Dashboard}/>
+      <RotaPrivadaAdmin path="/admin/categorias" component={CrudCategorias}/>
+      <RotaPrivadaAdmin path="/admin/eventos" component={CrudEventos}/>
     </Switch>
   </Router>
 )
