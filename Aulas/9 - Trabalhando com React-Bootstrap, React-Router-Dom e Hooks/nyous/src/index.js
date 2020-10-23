@@ -64,12 +64,12 @@ const routing = (
       <Route exact path="/" component={Home}/> {/*Tem que por exact por que como todos tem / se não tiver esse exact ele sempre vai pra home*/}
       <Route path="/login" component={Login}/>
       <Route path="/cadastrar" component={Cadastrar}/>
-      {/*Se não encontrar, renderiza essa padrão.*/}
-      <Route component={NaoEncontrada}/>
       <RotaPrivada path="/eventos" component={Eventos}/>
       <RotaPrivadaAdmin path="/admin/dashboard" component={Dashboard}/>
       <RotaPrivadaAdmin path="/admin/categorias" component={CrudCategorias}/>
       <RotaPrivadaAdmin path="/admin/eventos" component={CrudEventos}/>
+      {/*Se não encontrar, renderiza essa padrão. ELA TEM QUE FICAR POR ÚLTIMO*/}
+      <Route component={NaoEncontrada}/>
     </Switch>
   </Router>
 )

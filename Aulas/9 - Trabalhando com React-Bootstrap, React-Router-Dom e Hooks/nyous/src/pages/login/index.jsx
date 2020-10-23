@@ -6,6 +6,7 @@ import Rodape from "../../components/rodape";
 import {Container, Form, Button} from "react-bootstrap";
 //Para decodificar o token e verificar o tipo de usuário
 import jwt_decode from "jwt-decode";
+import {url} from "../../utils/constants";
 
 const Login = () => {
     //Ao invés de definir um constructor e um setState fazemos assim, utilizando HOOKS.
@@ -18,7 +19,7 @@ const Login = () => {
     const logar = (event) => {
         event.preventDefault();
 
-        fetch("http://lcoalhost:5000/api/account/login", {
+        fetch(`${url}/account/login`, {
             method: "POST",
             body: JSON.stringify({
                 email: email,
