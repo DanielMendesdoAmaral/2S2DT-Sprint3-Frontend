@@ -28,7 +28,7 @@ const CrudCategorias = () => {
     const editar = (event) => {
         event.preventDefault();
 
-        fetch(url + "/categorias" + event.target.value)
+        fetch(url + "/categorias/" + event.target.value)
         .then(response => response.json())
         .then(dados => {
             setId(dados.data.id);
@@ -122,16 +122,13 @@ const CrudCategorias = () => {
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control type="text" value={nome} onChange={event => setNome(event.target.value)}></Form.Control>
                             </Form.Group>
-                        </Form>
-
-                        <Form>
-                        <Form.File 
-                            id="fileCategoria"
-                            label="Imagem da categoria"
-                            custom
-                            onChange={event => uploadFile(event)}
-                        />
-                        {urlImagem && <img src={urlImagem} style={{width: "150px"}}/> /*Se o usuário tiver selecionado uma imagem, ela aparecerá ali do lado.*/}
+                            <Form.File 
+                                id="fileCategoria"
+                                label="Imagem da categoria"
+                                custom
+                                onChange={event => uploadFile(event)}
+                            />
+                            {urlImagem && <img src={urlImagem} style={{width: "150px"}}/> /*Se o usuário tiver selecionado uma imagem, ela aparecerá ali do lado.*/}
                         </Form>
 
                         <Button variant="success" type="submit" style={{marginTop: "15px"}}>
@@ -152,8 +149,7 @@ const CrudCategorias = () => {
                                     <tr key={index}>
                                         <td><img src={item.urlImagem} style={{width: "150px"}}/></td>
                                         <td>{item.nome}</td>
-                                        <td><Button variant="primary" type="button" value={item.id} onClick={event => editar(event)}>Editar</Button></td>
-                                        <td><Button variant="danger" type="button" value={item.id} onClick={event => remover(event)} style={{marginLeft: "15px"}}>Remover</Button></td>
+                                        <td><Button variant="primary" type="button" value={item.id} onClick={event => editar(event)}>Editar</Button><Button variant="danger" type="button" value={item.id} onClick={event => remover(event)} style={{marginLeft: "15px"}}>Remover</Button></td>
                                     </tr>
                                 )
                             })

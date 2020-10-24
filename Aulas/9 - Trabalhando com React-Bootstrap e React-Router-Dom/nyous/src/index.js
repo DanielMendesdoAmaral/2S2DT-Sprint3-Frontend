@@ -30,7 +30,7 @@ import jwt_decode from "jwt-decode";
 //Recebe um componente como parâmetro
 const RotaPrivada = ({component : Component, ...rest}) => (
   <Route
-    {...rest}
+    {...rest} /*Pega todos os atributos do elemento (path.. component, exact, etc.*/
     render= {
       props => 
       //Se a pessoa não estiver logada

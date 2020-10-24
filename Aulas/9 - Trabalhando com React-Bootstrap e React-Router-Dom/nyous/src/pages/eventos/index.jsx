@@ -1,25 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rodape from "../../components/rodape";
 import Menu from "../../components/menu";
-import {useHistory} from "react-router-dom";
+import Titulo from "../../components/titulo";
+import {Container, Row, Col, Card} from "react-bootstrap";
+import {url} from "../../utils/constants";
 
 const Eventos = () => {
-    const history = useHistory();
+    const [eventos, setEventos] = useState([]);
 
-    //Hooks para subtituir o componentDidMount, quando o componente é inicializado.
-    //Isso faz com que só pessoas logadas tenham acesso a essa página. Ou seja, mesmo se ele escrever essa rota no navegador ele não vai vim pra cá.  Mas você teria que fazer isso em cada página, ppor isso tem uma forma melhor lá no index.js
     useEffect(() => {
-        const token = localStorage.getItem("token-nyous");
-
-        if(token === null) {
-            history.push("/login");
-        }
+        listar();
     }, []);
+
+    const listar = () => {
+        fetch(url+"/eventos")
+        .then(response => response.json())
+        .then(dados => {
+            setEventos(dados.data);
+        })
+        .catch(err => alert(err + ". Mande um email para a nossa equipe de suporte: eventos.suport@gmail.com"));
+    }
 
     return (
         <div>
             <Menu/>
-            <h1>Eventos</h1>
+            <Container> 
+                <Titulo titulo="Eventos" descricao="Saiba de tudo o que acontece nos eventos do SENAI"/>
+                <Row>
+                    {
+                        eventos.map((item, index) => {
+                            return (
+                                <Col xs="4">
+                                    <Card>
+                                        <Card.Img variant="top" src={item.urlImagem} />
+                                        <Card.Body>
+                                            <Card.Title>{item.nome}</Card.Title>
+                                            <Card.Text>
+                                                {item.descricao}
+                                                <a href={item.link}>Ir!</a>
+                                            </Card.Text>
+                                        </Card.Body>
+                                        <Card.Footer>
+                                            <small className="text-muted">{item.categoria.nome}</small>
+                                        </Card.Footer>
+                                    </Card>
+                                </Col>
+                            )
+                        })
+                    }
+                </Row>
+            </Container>
             <Rodape/>
         </div>
     )
