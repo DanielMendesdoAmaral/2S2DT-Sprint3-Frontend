@@ -1,1 +1,1 @@
-# 2S2DT-Sprint3-Frontend
+Aulas/exercícios da sprint 3 (Frontend) do 2º semestre do curso Técnico de Desenvolvimento de Sistemas.
